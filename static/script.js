@@ -245,8 +245,8 @@ btnEmbed.addEventListener('click', async () => {
 
     if (data.error) { showToast(`Error: ${data.error}`, 'error'); return; }
 
-    setImage('disp-cover',      'ph-cover',      data.cover_b64);
-    setImage('disp-wm-orig',    'ph-wm-orig',    data.watermark_b64);
+    // setImage('disp-cover',      'ph-cover',      data.cover_b64);
+    // setImage('disp-wm-orig',    'ph-wm-orig',    data.watermark_b64);
     setImage('disp-watermarked','ph-watermarked', data.watermarked_b64);
 
     updateMetric('psnr', data.psnr);
