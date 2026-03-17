@@ -1,5 +1,16 @@
 # 🔐 WHT Watermark Lab
 
+
+## 🌐 Live Demo
+
+> 🔗 **Experience the app live:**  
+> 👉 [WHT Watermark Lab](https://whtmark-1.onrender.com)
+
+
+
+⚡ No setup required — upload images and test watermarking instantly!
+
+
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Framework-Flask-green?style=flat-square&logo=flask)](https://flask.palletsprojects.com/)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE)
