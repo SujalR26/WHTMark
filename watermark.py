@@ -166,16 +166,15 @@ def embed_bits_in_block(F, bits_4, T=T):
     for k, (r, c1, c2) in enumerate(positions):
         a, b = F_mod[r, c1], F_mod[r, c2]
         avg = (a + b) / 2.0
-        diff = a - b
         wbit = bits_4[k]
         if wbit == 1:
-            if diff <= T:
-                F_mod[r, c1] = avg + T / 2
-                F_mod[r, c2] = avg - T / 2
+            # Always embed bit 1: ensure c1 > c2
+            F_mod[r, c1] = avg + T / 2
+            F_mod[r, c2] = avg - T / 2
         else:  # wbit == 0
-            if -diff <= T:
-                F_mod[r, c1] = avg - T / 2
-                F_mod[r, c2] = avg + T / 2
+            # Always embed bit 0: ensure c1 < c2
+            F_mod[r, c1] = avg - T / 2
+            F_mod[r, c2] = avg + T / 2
     return F_mod, positions
 
 
@@ -401,7 +400,7 @@ def apply_attack(img, attack_type, **kwargs):
         result = np.clip(img.astype(np.float64) + noise, 0, 255).astype(np.uint8)
 
     elif attack_type == 'jpeg_compression':
-        quality = kwargs.get('quality', 50)
+        quality = kwargs.get('quality', 85)
         encode_params = [cv2.IMWRITE_JPEG_QUALITY, quality]
         _, enc = cv2.imencode('.jpg', img, encode_params)
         result = cv2.imdecode(enc, cv2.IMREAD_COLOR)
@@ -416,14 +415,14 @@ def apply_attack(img, attack_type, **kwargs):
         result[:, w - crop_w:] = 0
 
     elif attack_type == 'rotation':
-        angle = kwargs.get('angle', 5)
+        angle = kwargs.get('angle', 1)
         h, w = img.shape[:2]
         center = (w // 2, h // 2)
         M = cv2.getRotationMatrix2D(center, angle, 1.0)
         result = cv2.warpAffine(img, M, (w, h))
 
     elif attack_type == 'scaling':
-        scale = kwargs.get('scale', 0.9)
+        scale = kwargs.get('scale', 0.95)
         h, w = img.shape[:2]
         new_h, new_w = int(h * scale), int(w * scale)
         scaled = cv2.resize(img, (new_w, new_h))
